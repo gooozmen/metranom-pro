@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metronome</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon">
+</head>
+<body class="dark-theme">
+
+    <!-- Десктопная панель настроек (верхний правый угол) — элементы телепортируются JS -->
+    <div class="settings-panel" id="settingsPanel"></div>
+
+    <!-- Бокс с точками ударов -->
+    <div class="section beats-section">
+        <div id="beatIndicatorContainer" class="beat-indicator-container"></div>
+    </div>
+
+    <!-- Play + Slider + BPM + TAP -->
+    <div class="section controls-section">
+        <button id="startStopBtn"></button>
+        <input type="range" id="tempoSlider" min="20" max="500" value="120">
+        <input type="number" id="tempoInput" value="120" min="20" max="500">
+        <button id="tapBtn">TAP</button>
+    </div>
+
+    <!-- Очередь тактов + кнопка + -->
+    <div class="section queue-section">
+        <div id="timeSignatureQueue" class="time-signature-queue"></div>
+        <button id="addMeasureBtn" class="add-measure-btn" title="Добавить такт">+</button>
+    </div>
+
+    <!-- Нижняя строка: звук + акцент (для мобилки, CSS/JS управляют позицией) -->
+    <div class="section bottom-section" id="bottomSection">
+        <select id="soundSetSelect">
+            <option value="acoustic">Акустика</option>
+            <option value="electronic">Электро</option>
+        </select>
+        <label class="accent-label">
+            <input type="checkbox" id="accentOnFirst" checked>
+            Акцент на первый такт
+        </label>
+    </div>
+
+    <button id="themeToggleBtn" class="theme-toggle-btn" title="Сменить тему"></button>
+
+    <audio id="clickSound" src="sepls/acoustic/click.mp3"></audio>
+    <audio id="accentSound" src="sepls/acoustic/accent.mp3"></audio>
+
+    <script src="script.js"></script>
+    <script>
+    // На десктопе перемещаем select и accent-label в панель настроек
+    function redistributeControls() {
+        const panel = document.getElementById('settingsPanel');
+        const bottom = document.getElementById('bottomSection');
+        const select = document.getElementById('soundSetSelect');
+        const accentLabel = select.nextElementSibling; // label.accent-label
+
+        if (window.innerWidth >= 769) {
+            // На десктопе: select и акцент в панель
+            panel.appendChild(select);
+            panel.appendChild(accentLabel);
+        } else {
+            // На мобилке: все вместе в bottom-section
+            bottom.insertBefore(select, bottom.firstChild);
+            bottom.appendChild(accentLabel);
+        }
+    }
+
+    redistributeControls();
+    window.addEventListener('resize', redistributeControls);
+    </script>
+</body>
+</html>
