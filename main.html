@@ -12,11 +12,6 @@
     <!-- Десктопная панель настроек (верхний правый угол) — элементы телепортируются JS -->
     <div class="settings-panel" id="settingsPanel"></div>
 
-    <!-- Бокс с точками ударов -->
-    <div class="section beats-section">
-        <div id="beatIndicatorContainer" class="beat-indicator-container"></div>
-    </div>
-
     <!-- Play + Slider + BPM + TAP -->
     <div class="section controls-section">
         <button id="startStopBtn"></button>
@@ -25,10 +20,11 @@
         <button id="tapBtn">TAP</button>
     </div>
 
-    <!-- Очередь тактов + кнопка + -->
-    <div class="section queue-section">
-        <div id="timeSignatureQueue" class="time-signature-queue"></div>
-        <button id="addMeasureBtn" class="add-measure-btn" title="Добавить такт">+</button>
+    <!-- Слои метронома (подложки): каждая содержит свою очередь тактов.
+         Drag-своп между подложками — стадия 7 (задачи), пока порядок фиксирован. -->
+    <div class="section layers-section">
+        <div id="layersContainer" class="layers-container"></div>
+        <button id="addLayerBtn" class="add-measure-btn" title="Добавить слой">+</button>
     </div>
 
     <!-- Нижняя строка: звук + акцент (для мобилки, CSS/JS управляют позицией) -->
@@ -44,9 +40,6 @@
     </div>
 
     <button id="themeToggleBtn" class="theme-toggle-btn" title="Сменить тему"></button>
-
-    <audio id="clickSound" src="sepls/acoustic/click.mp3"></audio>
-    <audio id="accentSound" src="sepls/acoustic/accent.mp3"></audio>
 
     <script src="script.js"></script>
     <script>
